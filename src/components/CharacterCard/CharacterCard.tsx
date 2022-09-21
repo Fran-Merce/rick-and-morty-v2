@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { Character } from '../../models/Character';
 import {
@@ -10,12 +10,10 @@ import {
 } from './CharacterCardStyled';
 
 export const CharacterCard = (props: Character) => {
-  const { name, image, id, gender, status, species } = props;
-  const navigate = useNavigate();
+  const { name, image, gender, status, species } = props;
   return (
     <CharacterCardStyled
       status={status !== 'unknown' && status}
-      onClick={() => navigate(`/${id}`)}
     >
       <span />
       <CharacterStatus status={status !== 'unknown' && status}>
