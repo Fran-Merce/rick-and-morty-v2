@@ -1,5 +1,5 @@
 import { debounce } from 'lodash';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Character } from '../models/Character';
 import { getCharacters } from '../services/api';
 
@@ -15,7 +15,6 @@ export const useCharacters = () => {
     try {
       const { data, info } = await getCharacters(page, search);
       info.next ? setHasMore(true) : setHasMore(false);
-      // !only for development becuse react scrict mode call twice the api cal
       characters.length === 0
         ? setCharacters(data)
         : setCharacters(prevCharacters => prevCharacters.concat(data));

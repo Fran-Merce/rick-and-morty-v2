@@ -1,12 +1,10 @@
-import { useFetchers } from 'react-router-dom';
-import { CharacterCard } from './components/CharacterCard/CharacterCard';
 import { Layout } from './components/Layout';
-import { useCharacters } from './hooks/useCharacters';
-import { AppRouter } from './routes/AppRouter';
+import { HomePage } from './pages/HomePage/HomePage';
+
 
 const App = () => (
   <Layout>
-    <AppRouter />
+    <HomePage/>
   </Layout>
 );
 
