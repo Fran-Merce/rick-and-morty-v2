@@ -1,5 +1,4 @@
 
-import { useNavigate } from 'react-router-dom';
 import { Character } from '../../models/Character';
 import {
   CharacterCardImage,
