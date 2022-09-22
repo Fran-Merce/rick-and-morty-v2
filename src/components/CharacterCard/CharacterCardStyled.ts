@@ -45,6 +45,7 @@ export const CharacterCardStyled = styled.div<CharacterCardStyledProps>`
     right: 0;
     width: 100%;
     height: 100%;
+    z-index: -1;
   }
   
   span::after{
@@ -100,4 +101,5 @@ export const CharacterInfo = styled.p`
   font-size: 1.2rem;
   padding: 0.3rem;
   color: #fff;
+  text-align: center;
   `
