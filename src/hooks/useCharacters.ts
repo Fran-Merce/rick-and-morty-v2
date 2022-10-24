@@ -1,3 +1,4 @@
+import axios, {  CancelTokenSource } from 'axios';
 import { debounce } from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { Character } from '../models/Character';
@@ -10,14 +11,13 @@ export const useCharacters = () => {
   const [error, setError] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const dataCharacters = async () => {
+
+  const dataCharacters = async (cancelToken: CancelTokenSource) => {
     setLoading(true);
     try {
-      const { data, info } = await getCharacters(page, search);
+      const { data, info } = await getCharacters(page, search, cancelToken);
       info.next ? setHasMore(true) : setHasMore(false);
-      characters.length === 0
-        ? setCharacters(data)
-        : setCharacters(prevCharacters => prevCharacters.concat(data));
+      setCharacters(prevCharacters => prevCharacters.concat(data));
       setError(null);
     } catch (error) {
       if (error instanceof Error) {
@@ -45,8 +45,10 @@ export const useCharacters = () => {
   }, [handleSearch]);
 
   useEffect(() => {
-    dataCharacters();
+    const cancelToken = axios.CancelToken.source();
+    dataCharacters(cancelToken);
+    return () => cancelToken.cancel();
   }, [page, search]);
 
-  return { data: characters, handlePage, handleSearch, error, hasMore,loading};
+  return { data: characters, handlePage, handleSearch, error, hasMore, loading };
 };
