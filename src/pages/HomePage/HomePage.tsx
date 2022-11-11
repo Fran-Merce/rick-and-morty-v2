@@ -28,7 +28,7 @@ export const HomePage = () => {
           {data?.length  && (
             <CharactersWrapper>
               {data?.map(character => (
-                <CharacterCard key={character.id} {...character} />
+                <CharacterCard  key={character.id} {...character} />
               ))}
             </CharactersWrapper>
           )}

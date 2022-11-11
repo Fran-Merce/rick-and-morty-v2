@@ -1,4 +1,4 @@
-import axios, {  CancelTokenSource } from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 import { debounce } from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { Character } from '../models/Character';
@@ -17,7 +17,9 @@ export const useCharacters = () => {
     try {
       const { data, info } = await getCharacters(page, search, cancelToken);
       info.next ? setHasMore(true) : setHasMore(false);
-      setCharacters(prevCharacters => prevCharacters.concat(data));
+      characters.length === 0
+        ? setCharacters(data)
+        : setCharacters(prevCharacters => prevCharacters.concat(data));
       setError(null);
     } catch (error) {
       if (error instanceof Error) {
@@ -30,6 +32,8 @@ export const useCharacters = () => {
     setLoading(false);
   };
 
+  const handlePage = () => setPage(prevPage => prevPage + 1);
+
   const handleSearch = useRef(
     debounce((e: React.ChangeEvent<HTMLInputElement>) => {
       setCharacters([]);
@@ -37,8 +41,6 @@ export const useCharacters = () => {
       setPage(1);
     }, 400)
   ).current;
-
-  const handlePage = () => setPage(prevPage => prevPage + 1);
 
   useEffect(() => {
     return () => handleSearch.cancel();
@@ -49,6 +51,6 @@ export const useCharacters = () => {
     dataCharacters(cancelToken);
     return () => cancelToken.cancel();
   }, [page, search]);
-
+  console.log(characters, 'desde aca');
   return { data: characters, handlePage, handleSearch, error, hasMore, loading };
 };

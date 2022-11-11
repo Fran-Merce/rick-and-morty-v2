@@ -9,9 +9,10 @@ import {
 } from './CharacterCardStyled';
 
 export const CharacterCard = (props: Character) => {
-  const { name, image, gender, status, species } = props;
+  const { name, image, gender, status, species,id } = props;
   return (
     <CharacterCardStyled
+    data-cy="character"
       status={status !== 'unknown' && status}
     >
       <span />
